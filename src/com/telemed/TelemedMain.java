@@ -75,7 +75,9 @@ public class TelemedMain {
 
                 } while(choice != 3);
 
-            } else if(currUser.isAdminUser() == true) {
+            } else if(currUser.isAdminUser()) {
+                // admin user
+
                 do {
                     System.out.println("Logged in admin user: " + currUser.getName());
                     System.out.println(adminMenu);
@@ -88,7 +90,6 @@ public class TelemedMain {
                     } else if(choice == 4) {
                         currUser = null;
                         System.out.println("Logged out.");
-
                     }
 
                 } while(choice != 3);
