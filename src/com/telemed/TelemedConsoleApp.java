@@ -2,7 +2,7 @@ package com.telemed;
 
 import java.util.Scanner;
 
-public class TelemedMain {
+public class TelemedConsoleApp {
     static TelemedMemDBWithFileSave telemedDB = new TelemedMemDBWithFileSave();
 
 
