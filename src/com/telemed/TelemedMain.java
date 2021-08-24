@@ -3,23 +3,24 @@ package com.telemed;
 import java.util.Scanner;
 
 public class TelemedMain {
-    static TelemedMemDB telemedDB = new TelemedMemDB();
+    static TelemedMemDBWithFileSave telemedDB = new TelemedMemDBWithFileSave();
 
 
-    static String mainMenu = "Main menu:\n" +
+    static String mainMenu = "\n\nMain menu:\n" +
             "1 - Signup/registration\n" +
             "2 - Login\n" +
             "0 - Exit";
 
-    static String loggedInMenu = "Logged in menu:\n" +
+    static String loggedInMenu = "\n\nLogged in menu:\n" +
             "1 - Add new record\n" +
             "2 - List all records\n" +
             "3 - Logout\n";
 
-    static String adminMenu = "Admin menu:\n" +
+    static String adminMenu = "\n\nAdmin menu:\n" +
             "1 - List all users\n" +
             "2 - Remove user\n" +
-            "3 - See records for user\n";
+            "3 - See records for user\n" +
+            "4 - Log out";
 
 
 
@@ -42,7 +43,7 @@ public class TelemedMain {
                     u.setPassword(scanner.next());
 
                     telemedDB.registerNewUser(u);
-
+                    System.out.println("User " + u + " is registered.");
                     currUser = u;
                 } else if (choice == 2) { // login
 
@@ -62,10 +63,38 @@ public class TelemedMain {
             } else if(currUser.isAdminUser() == false) {
                 // display logged in user menu
 
+                do {
+                    System.out.println("Logged in user: " + currUser.getName());
+                    System.out.println(loggedInMenu);
+
+                    choice = scanner.nextInt();
+                    if(choice == 3) {
+                        currUser = null;
+                        System.out.println("Logged out.");
+                    }
+
+                } while(choice != 3);
+
             } else if(currUser.isAdminUser() == true) {
-                // display admin menu
+                do {
+                    System.out.println("Logged in admin user: " + currUser.getName());
+                    System.out.println(adminMenu);
+
+                    choice = scanner.nextInt();
+                    if(choice == 1) {
+                        for (User u : telemedDB.getUserList())  {
+                            System.out.println(u);
+                        }
+                    } else if(choice == 4) {
+                        currUser = null;
+                        System.out.println("Logged out.");
+
+                    }
+
+                } while(choice != 3);
             }
         } while (choice != 0);
 
+        telemedDB.saveToFile();
     }
 }

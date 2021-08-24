@@ -1,19 +1,28 @@
 package com.telemed;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelemedMemDB {
-    List<User> userList = new ArrayList<User>();
+    List<User> userList = new ArrayList<>();
     List<Record> recordList = new ArrayList<Record>();
 
 
     public TelemedMemDB() {
-        User adminUser = new User("Admin", "Admin", 40);
-        adminUser.setAdminUser(true);
-        adminUser.setUsername("admin");
-        adminUser.setPassword("admin123");
-        userList.add(adminUser);
+
+        if(userList.size() == 0) {
+            User adminUser = new User("Admin", "Admin", 40);
+            adminUser.setAdminUser(true);
+            adminUser.setUsername("admin");
+            adminUser.setPassword("");
+            userList.add(adminUser);
+        }
+
     }
 
     void addRecord(Record r) {
@@ -42,4 +51,10 @@ public class TelemedMemDB {
     public void registerNewUser(User u) {
         userList.add(u);
     }
+
+    public List<User> getUserList() {
+        return new ArrayList<User>(userList);
+    }
+
+
 }
